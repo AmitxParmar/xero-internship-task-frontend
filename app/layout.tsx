@@ -49,7 +49,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               {/* <SiteHeader /> */}
               <div className="flex-1">
                 <div className="min-w-screen flex h-screen max-h-[800px] w-screen max-w-screen-xl overflow-y-hidden">
-                  <div className="px-12 pt-8 md:w-6/12">{children}</div>
+                  <div className="overflow-y-auto px-12 pt-8 scrollbar-thin md:w-6/12">{children}</div>
                   <Separator
                     orientation="vertical"
                     className="mx-12 my-auto h-4/5"

@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useState } from "react"
-import Image from "next/image"
 import Link from "next/link"
 
 import { cn } from "@/lib/utils"
@@ -9,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import LoginSignUpVector from "@/components/common/LoginSignUpVector"
 import PageHero from "@/components/common/PageHero"
+import SSOButtons from "@/components/common/SSOButtons"
 
 const SignIn = () => {
   const [name, setName] = useState()
@@ -68,8 +68,9 @@ const SignIn = () => {
             </div>
             <div className="relative">
               <Input
-                placeholder="Enter Password"
+                placeholder="Confirm Password"
                 name="password"
+                type="password"
                 style={{ lineHeight: 1.15 }}
                 onChange={handleChange}
                 value={password}
@@ -90,13 +91,15 @@ const SignIn = () => {
                 style={{ borderRightColor: "transparent" }}
               />
             ) : (
-              "Sign Up"
+              "SIGN UP"
             )}
           </Button>
         </form>
 
         <div style={{ margin: "0 10%" }}>
-          <hr className="mx-auto my-5" style={{ background: "#ebedf1" }} />
+          <h5 className="mb-5 text-center font-extrabold text-subtle/50">OR</h5>
+          {/* Single Tap Login Buttons */}
+          <SSOButtons />
 
           <p
             className="mt-5 text-center"
