@@ -6,7 +6,6 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import LoginSignUpVector from "@/components/common/LoginSignUpVector"
 import PageHero from "@/components/common/PageHero"
 import SSOButtons from "@/components/common/SSOButtons"
 
@@ -22,7 +21,10 @@ const SignIn = () => {
   return (
     <>
       <PageHero title="Hello!" desc="Create Your Account" />
-      <div className="w-full max-w-xl" style={{ color: "#141820" }}>
+      <div
+        className="flex w-full max-w-xl flex-col justify-end"
+        style={{ color: "#141820" }}
+      >
         <form className={cn("block w-full")}>
           {/* ********* Name Email Password************* */}
           <div className="grid auto-cols-auto gap-5">
@@ -108,9 +110,9 @@ const SignIn = () => {
             Already have an Account?{" "}
             <Link
               href="/"
-              className="text-signup-blue cursor-pointer font-semibold"
+              className="cursor-pointer font-semibold text-primary"
             >
-              Log In
+              LOG IN
             </Link>
           </p>
         </div>

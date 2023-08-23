@@ -20,7 +20,7 @@ const PageHero = ({ title, desc }: Props) => {
       </div>
       <div className="relative mb-5 p-1 text-center">
         <h1 className="mb-3 text-[32px] font-bold">{title}</h1>
-        <h4 className="justify-baseline flex flex-row items-center  text-sm font-bold leading-none text-gray-400">
+        <h4 className="justify-baseline flex flex-row items-center whitespace-nowrap text-sm font-bold leading-none text-gray-400">
           <svg
             width="150"
             height="1"
