@@ -107,13 +107,15 @@ const SignIn = () => {
             className="mt-5 text-center"
             style={{ fontSize: "15px", color: "#788699" }}
           >
-            Already have an Account?{" "}
-            <Link
-              href="/"
-              className="cursor-pointer font-semibold text-primary"
-            >
-              LOG IN
-            </Link>
+            Already have an Account ?{" "}
+            <span>
+              <Link
+                href="/"
+                className="cursor-pointer font-semibold text-primary"
+              >
+                LOG IN
+              </Link>
+            </span>
           </p>
         </div>
       </div>

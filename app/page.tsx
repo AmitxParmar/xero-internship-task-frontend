@@ -70,17 +70,16 @@ const Login = () => {
           {/* Single Tap Login Buttons */}
           <SSOButtons />
 
-          <p
-            className="mt-5 text-center"
-            style={{ fontSize: "15px", color: "#788699" }}
-          >
-            Already have an Account?{" "}
-            <Link
-              href="/sign-up"
-              className="cursor-pointer font-semibold text-primary"
-            >
-              SIGN UP
-            </Link>
+          <p className="mt-5 text-center text-sm text-subtle/50">
+            Don’t have an Account ?{" "}
+            <span>
+              <Link
+                href="/sign-up"
+                className="cursor-pointer font-semibold text-primary"
+              >
+                SIGN UP
+              </Link>
+            </span>
           </p>
         </div>
       </div>
