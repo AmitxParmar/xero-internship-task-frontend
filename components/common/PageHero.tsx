@@ -34,28 +34,28 @@ const PageHero = ({ title, desc }: Props) => {
               x2="150"
               y2="0.5"
               stroke="#AAB2C8"
-              stroke-opacity="0.45"
+              strokeOpacity="0.45"
             />
             <line
               y1="0.5"
               x2="150"
               y2="0.5"
               stroke="#AAB2C8"
-              stroke-opacity="0.45"
+              strokeOpacity="0.45"
             />
             <line
               y1="0.5"
               x2="150"
               y2="0.5"
               stroke="#AAB2C8"
-              stroke-opacity="0.45"
+              strokeOpacity="0.45"
             />
             <line
               y1="0.5"
               x2="150"
               y2="0.5"
               stroke="#AAB2C8"
-              stroke-opacity="0.45"
+              strokeOpacity="0.45"
             />
           </svg>
           {desc}
@@ -72,28 +72,28 @@ const PageHero = ({ title, desc }: Props) => {
               x2="150"
               y2="0.5"
               stroke="#AAB2C8"
-              stroke-opacity="0.45"
+              strokeOpacity="0.45"
             />
             <line
               y1="0.5"
               x2="150"
               y2="0.5"
               stroke="#AAB2C8"
-              stroke-opacity="0.45"
+              strokeOpacity="0.45"
             />
             <line
               y1="0.5"
               x2="150"
               y2="0.5"
               stroke="#AAB2C8"
-              stroke-opacity="0.45"
+              strokeOpacity="0.45"
             />
             <line
               y1="0.5"
               x2="150"
               y2="0.5"
               stroke="#AAB2C8"
-              stroke-opacity="0.45"
+              strokeOpacity="0.45"
             />
           </svg>
         </h4>

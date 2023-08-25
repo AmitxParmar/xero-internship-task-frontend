@@ -1,8 +1,12 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { ChangeEvent, useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useAuth } from "@/store/auth.store"
+import axios from "axios"
 
+import { IUser } from "@/types/global"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -10,12 +14,42 @@ import PageHero from "@/components/common/PageHero"
 import SSOButtons from "@/components/common/SSOButtons"
 
 const Login = () => {
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
+  const router = useRouter()
+  const { loginFailure, loginStart, loginSuccess, loading } = useAuth(
+    (store) => store
+  )
+  const [credentials, setCredentials] = useState<{
+    email: string
+    password: string
+  }>({
+    email: "",
+    password: "",
+  })
 
-  const handleChange = () => {}
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCredentials((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+  const { email, password } = credentials
+  const isValid = email === "" || password === ""
 
-  const submitData = () => {}
+  const submitData = async () => {
+    if (isValid) return
+    loginStart()
+    const { data } = await axios
+      .post("http://localhost:8000/api/v1/sign-in", {
+        ...credentials,
+      })
+      .catch((err) => {
+        loginFailure(err)
+        console.log(err)
+      })
+    .finally(()=> )
+    /* .then((data) => { */
+    console.log(data._doc, "data sign in")
+    loginSuccess(data._doc)
+    router.replace("/dashboard")
+    /* }) */
+  }
 
   return (
     <div className="flex min-h-full flex-col justify-between">
@@ -31,7 +65,7 @@ const Login = () => {
               <Input
                 name="email"
                 onChange={handleChange}
-                value={email}
+                value={credentials.email}
                 placeholder="Email-Id"
                 type="email"
               />
@@ -42,7 +76,7 @@ const Login = () => {
                 name="password"
                 style={{ lineHeight: 1.15 }}
                 onChange={handleChange}
-                value={password}
+                value={credentials.password}
                 className="focus:border-focus-cyan  w-full rounded-md border p-2.5 text-sm outline-none transition-all duration-300 ease-in focus:border-2 focus:ring-0"
               />
             </div>
@@ -51,10 +85,10 @@ const Login = () => {
           <Button
             onClick={submitData}
             type="button"
-            className="disabled:bg-signup-blue/50 mx-auto mb-12 mt-6 flex  w-full items-center justify-center  rounded-md bg-primary px-3 py-2.5 text-sm font-bold text-white hover:bg-primary/80 disabled:cursor-not-allowed"
+            className="disabled:bg-signup-blue/50 mx-auto mb-12 mt-6 flex  w-full items-center justify-center rounded-md bg-primary px-3 py-2.5 text-sm font-bold text-white hover:bg-primary/80 disabled:cursor-not-allowed"
             style={{ lineHeight: "1.375rem" }}
           >
-            {false /* NOTE:Add loading state */ ? (
+            {loading ? (
               <div
                 className="border-focus-cyan mr-2 h-4 w-4 animate-spin rounded-full border-2 "
                 style={{ borderRightColor: "transparent" }}

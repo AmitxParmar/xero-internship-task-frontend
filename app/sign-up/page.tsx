@@ -2,6 +2,8 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import axios from "axios"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -10,13 +12,24 @@ import PageHero from "@/components/common/PageHero"
 import SSOButtons from "@/components/common/SSOButtons"
 
 const SignIn = () => {
+  const router = useRouter()
   const [name, setName] = useState()
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
 
   const handleChange = () => {}
 
-  const submitData = () => {}
+  const submitData = async () => {
+    const { data } = await axios
+      .post("http://localhost:8000/api/v1/sign-up", {
+        firstname: "amit",
+        lastname: "parmar",
+        password: "@admin123",
+        email: "amitparmar901@gmail.com",
+      })
+      .catch((err) => console.log("error signup", err))
+    
+  }
 
   return (
     <>
@@ -43,7 +56,7 @@ const SignIn = () => {
                 name="lastName"
                 onChange={handleChange}
                 value={name}
-                placeholder="Enter Your Full Name"
+                placeholder="Last Name"
                 type="text"
                 {...{ minLength: 5, maxLength: 40 }}
               />

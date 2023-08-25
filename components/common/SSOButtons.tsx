@@ -1,15 +1,19 @@
 import React from "react"
 import Image from "next/image"
+import { signIn } from "next-auth/react"
 
 import { Button } from "../ui/button"
 
 type Props = {}
 
 const SSOButtons = (props: Props) => {
-    
   return (
     <div className="grid grid-cols-2 gap-6">
-      <Button variant={"outline"} className="relative px-2 text-subtle/50">
+      <Button
+        variant={"outline"}
+        className="relative px-2 text-subtle/50"
+        onClick={() => void signIn("google")}
+      >
         Sign in with Google
         <Image
           src={"/svg/google.svg"}
@@ -19,7 +23,11 @@ const SSOButtons = (props: Props) => {
           className="p-1"
         />
       </Button>
-      <Button variant={"outline"} className="relative px-2 text-subtle/50">
+      <Button
+        variant={"outline"}
+        className="relative px-2 text-subtle/50"
+        onClick={() => signIn("github")}
+      >
         Sign in with Google
         <Image
           src={"/svg/github.svg"}
