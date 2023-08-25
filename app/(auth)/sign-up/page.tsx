@@ -5,6 +5,8 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import axios from "axios"
 
+import { IUser } from "@/types/global"
+import { SIGN_UP } from "@/config/ApiRoutes"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -20,15 +22,15 @@ const SignIn = () => {
   const handleChange = () => {}
 
   const submitData = async () => {
-    const { data } = await axios
-      .post("http://localhost:8000/api/v1/sign-up", {
+    const res = await axios
+      .post(SIGN_UP, {
         firstname: "amit",
         lastname: "parmar",
         password: "@admin123",
         email: "amitparmar901@gmail.com",
       })
       .catch((err) => console.log("error signup", err))
-    
+    console.log(res?.data)
   }
 
   return (
@@ -123,7 +125,7 @@ const SignIn = () => {
             Already have an Account ?{" "}
             <span>
               <Link
-                href="/"
+                href="/login"
                 className="cursor-pointer font-semibold text-primary"
               >
                 LOG IN

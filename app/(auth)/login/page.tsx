@@ -7,6 +7,7 @@ import { useAuth } from "@/store/auth.store"
 import axios from "axios"
 
 import { IUser } from "@/types/global"
+import { SIGN_IN } from "@/config/ApiRoutes"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -15,9 +16,8 @@ import SSOButtons from "@/components/common/SSOButtons"
 
 const Login = () => {
   const router = useRouter()
-  const { loginFailure, loginStart, loginSuccess, loading } = useAuth(
-    (store) => store
-  )
+  const { loginFailure, loginStart, loginSuccess, loading, setLoading } =
+    useAuth((store) => store)
   const [credentials, setCredentials] = useState<{
     email: string
     password: string
@@ -34,21 +34,21 @@ const Login = () => {
 
   const submitData = async () => {
     if (isValid) return
-    loginStart()
-    const { data } = await axios
-      .post("http://localhost:8000/api/v1/sign-in", {
+    try {
+      loginStart()
+      const { data } = await axios.post(SIGN_IN, {
         ...credentials,
       })
-      .catch((err) => {
-        loginFailure(err)
-        console.log(err)
-      })
-    .finally(()=> )
-    /* .then((data) => { */
-    console.log(data._doc, "data sign in")
-    loginSuccess(data._doc)
-    router.replace("/dashboard")
-    /* }) */
+      console.log(data._doc, "data sign in")
+      localStorage.setItem("user", JSON.stringify(data._doc))
+      loginSuccess(data._doc)
+      router.replace("/dashboard")
+    } catch (error) {
+      loginFailure(error)
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
