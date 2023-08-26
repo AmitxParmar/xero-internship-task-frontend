@@ -16,7 +16,7 @@ import SSOButtons from "@/components/common/SSOButtons"
 
 const Login = () => {
   const router = useRouter()
-  const { loginFailure, loginStart, loginSuccess, loading, setLoading } =
+  const { loginFailure, loginStart, loginSuccess, loading, setLoading, error } =
     useAuth((store) => store)
   const [credentials, setCredentials] = useState<{
     email: string
@@ -39,10 +39,14 @@ const Login = () => {
       const { data } = await axios.post(SIGN_IN, {
         ...credentials,
       })
-      console.log(data._doc, "data sign in")
-      localStorage.setItem("user", JSON.stringify(data._doc))
-      loginSuccess(data._doc)
-      router.replace("/dashboard")
+      console.log(data)
+      if (data.success) {
+        console.log(data, "data sign in")
+        loginSuccess(data._doc)
+        router.push("/dashboard")
+      } else {
+        loginFailure(data.message)
+      }
     } catch (error) {
       loginFailure(error)
       console.log(error)
@@ -80,8 +84,10 @@ const Login = () => {
                 className="focus:border-focus-cyan  w-full rounded-md border p-2.5 text-sm outline-none transition-all duration-300 ease-in focus:border-2 focus:ring-0"
               />
             </div>
+            {error && (
+              <p className="py-1 text-sm font-medium text-red-600">{error}</p>
+            )}
           </div>
-
           <Button
             onClick={submitData}
             type="button"
@@ -94,7 +100,7 @@ const Login = () => {
                 style={{ borderRightColor: "transparent" }}
               />
             ) : (
-              "SIGN UP"
+              "LOGIN"
             )}
           </Button>
         </form>

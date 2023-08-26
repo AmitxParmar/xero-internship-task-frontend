@@ -8,7 +8,8 @@ import { IUser } from "@/types/global"
 interface IAuth {
   user: IUser | null | undefined
   loading: boolean // I'll change that later
-  error: Error | null | undefined
+  error: string | null | undefined
+  setError: (error: string) => void
   loginStart: () => void
   loginSuccess: (user: IUser) => void
   loginFailure: (error: any | null | undefined) => void
@@ -22,6 +23,7 @@ export const useAuth = create<IAuth>()(
       user: null,
       loading: false,
       error: null,
+      setError: (error) => set({ error }),
       loginStart: () => set({ loading: true }),
       loginSuccess: (user) => set({ user, loading: false }),
       loginFailure: (error) => set({ error, loading: false }),
@@ -31,6 +33,9 @@ export const useAuth = create<IAuth>()(
       },
       setLoading: (Boolean) => set({ loading: Boolean }),
     }),
-    { name: "user" }
+    {
+      name: "user",
+      partialize: (state) => ({ user: state.user }),
+    }
   )
 )
