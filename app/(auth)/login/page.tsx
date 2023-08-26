@@ -41,8 +41,8 @@ const Login = () => {
       })
       console.log(data)
       if (data.success) {
-        console.log(data, "data sign in")
-        loginSuccess(data._doc)
+        console.log(data.userInfo, "userInfo storing in state")
+        loginSuccess(data?.userInfo?._doc)
         router.push("/dashboard")
       } else {
         loginFailure(data.message)

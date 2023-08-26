@@ -10,7 +10,7 @@ export interface IUser {
 }
 
 export enum UserTypes {
-  Developer = "Developer",
-  Organization = "Organization",
-  Company = "Company",
+  Developer = "developer",
+  Organization = "organization",
+  Company = "company",
 }

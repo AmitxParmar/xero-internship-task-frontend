@@ -1,34 +1,19 @@
 "use client"
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import React, { useState } from "react"
+import { useAuth } from "@/store/auth.store"
 
-import userTypes from "./userType.components"
+import SelectHosting from "@/components/SelectHosting"
+import SelectUserType from "@/components/SelectUserType"
 
-const OnboardUser = () => {
+const Onboarding = () => {
+  const { step, setNextStep } = useAuth((store) => store)
   return (
-    <Tabs defaultValue="Developer" className="w-full">
-      <TabsList className="mx-auto grid grid-cols-3 grid-rows-none justify-between gap-12 bg-transparent">
-        {userTypes.map(({ title }, index) => (
-          <TabsTrigger
-            key={index}
-            value={title}
-            className="h-[59px] w-[266px] border border-borderSubtle"
-          >
-            {title}
-          </TabsTrigger>
-        ))}
-      </TabsList>
-      {userTypes.map(({ title, component }, index) => (
-        <TabsContent
-          key={index}
-          aria-disabled={title === "Developer"}
-          value={title}
-        >
-          {component}
-        </TabsContent>
-      ))}
-    </Tabs>
+    <div>
+      {step === 0 && <SelectUserType />}
+      {step === 1 && <SelectHosting />}
+    </div>
   )
 }
 
-export default OnboardUser
+export default Onboarding

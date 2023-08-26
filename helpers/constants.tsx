@@ -1,7 +1,16 @@
 import { UserTypes } from "@/types/global"
 import UserType from "@/components/common/UserType"
 
-const userType = [
+export const hostings = [
+  {
+    title: "self",
+  },
+  {
+    title: "xerocode",
+  },
+]
+
+export const userTypes = [
   {
     title: UserTypes.Developer,
   },
@@ -14,5 +23,3 @@ const userType = [
     component: <UserType userType={UserTypes.Company} />,
   },
 ]
-
-export default userType

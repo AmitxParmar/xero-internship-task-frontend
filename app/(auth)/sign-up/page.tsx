@@ -16,8 +16,9 @@ import PageHero from "@/components/common/PageHero"
 import SSOButtons from "@/components/common/SSOButtons"
 
 const SignIn = () => {
-  const { loading, loginStart, loginFailure, loginSuccess, error, setError } =
-    useAuth((store) => store)
+  const { loading, loginStart, loginFailure, loginSuccess, error } = useAuth(
+    (store) => store
+  )
   const router = useRouter()
   const [credentials, setCredentials] = useState({
     firstname: undefined,
@@ -33,16 +34,16 @@ const SignIn = () => {
   }
 
   const submitData = async () => {
-    if (validateUserCredentials(credentials)) return
+    if (!validateUserCredentials(credentials)) return
     try {
       loginStart()
       const res = await axios.post<{
-        status: boolean
+        success: boolean
         message: string
         userInfo: IUser
       }>(SIGN_UP, credentials)
       console.log(res?.data)
-      if (res.data.status) {
+      if (res.data.success) {
         loginSuccess(res.data.userInfo)
         router.replace("onboard")
       }

@@ -1,4 +1,8 @@
+"use client"
+
 import "@/styles/globals.css"
+/* import { useEffect } from "react"
+import { useRouter } from "next/navigation" */
 import { Metadata } from "next"
 
 import { siteConfig } from "@/config/site"
@@ -28,16 +32,23 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
+  /* const router = useRouter()
+  useEffect(() => {
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) */
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen bg-background !font-sans antialiased",
-          fontSans.variable
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable,
+          fontSans.className
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="relative mx-auto flex min-h-screen max-w-screen-xl flex-col overflow-hidden">
+          <div className="relative mx-auto flex min-h-screen max-w-screen-xl flex-col overflow-hidden font-sans">
             {/* <SiteHeader /> */}
             <div className="flex-1">{children}</div>
           </div>
