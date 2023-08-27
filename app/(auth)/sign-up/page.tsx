@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import { validateUserCredentials } from "@/helpers"
 import { useAuth } from "@/store/auth.store"
 import axios from "axios"
+import { z } from "zod"
 
 import { IUser } from "@/types/global"
 import { SIGN_UP } from "@/config/ApiRoutes"
@@ -16,9 +17,8 @@ import PageHero from "@/components/common/PageHero"
 import SSOButtons from "@/components/common/SSOButtons"
 
 const SignIn = () => {
-  const { loading, loginStart, loginFailure, loginSuccess, error } = useAuth(
-    (store) => store
-  )
+  const { loading, loginStart, loginFailure, loginSuccess, error, setError } =
+    useAuth((store) => store)
   const router = useRouter()
   const [credentials, setCredentials] = useState({
     firstname: undefined,
@@ -28,13 +28,31 @@ const SignIn = () => {
   })
   const [confirmPassword, setConfirmPassword] = useState<string>("")
 
+  const credentialsSchema = z
+    .object({
+      firstname: z.string().min(3).max(25),
+      lastname: z.string().min(3).max(25),
+      email: z.string().email({ message: "Invalid email" }).min(4).max(25),
+      password: z.string().min(8).max(25),
+    })
+    .required()
+
+  const isValid = () => {
+    try {
+      credentialsSchema.parse(credentials)
+      return true
+    } catch (error) {
+      if (error instanceof z.ZodError) setError(error.message)
+      return false
+    }
+  }
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCredentials((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     console.log(credentials)
   }
 
   const submitData = async () => {
-    if (!validateUserCredentials(credentials)) return
+    if (!isValid) return
     try {
       loginStart()
       const res = await axios.post<{

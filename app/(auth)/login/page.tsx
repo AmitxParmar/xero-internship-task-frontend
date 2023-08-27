@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import { useAuth } from "@/store/auth.store"
 import axios from "axios"
 
-import { IUser } from "@/types/global"
+
 import { SIGN_IN } from "@/config/ApiRoutes"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
