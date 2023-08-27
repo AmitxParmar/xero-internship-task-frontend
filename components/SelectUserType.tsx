@@ -1,10 +1,10 @@
 "use client"
 
-import { userTypes } from "@/helpers/constants"
+import { type IUserTypes } from "@/helpers/constants"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-const SelectUserType = () => {
+const SelectUserType = ({ userTypes }: { userTypes: IUserTypes }) => {
   return (
     <Tabs defaultValue="developer" className="flex flex-col">
       <TabsList className="mx-auto grid h-full grid-cols-3 grid-rows-none justify-between gap-12 bg-transparent">

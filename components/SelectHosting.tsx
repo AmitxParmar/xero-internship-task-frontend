@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { hostings } from "@/helpers/constants"
+import { IHostings, hostings } from "@/helpers/constants"
 import { useAuth } from "@/store/auth.store"
 import axios from "axios"
 
@@ -10,7 +10,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { Button } from "./ui/button"
 
-const SelectHosting = ({ hostings }: IHostings) => {
+const SelectHosting = ({ hostings }: { hostings: IHostings }) => {
   const { setNextStep, loginSuccess, user } = useAuth((store) => store)
   const [hosting, setHosting] = useState("")
 

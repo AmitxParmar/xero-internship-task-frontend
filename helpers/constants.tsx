@@ -1,5 +1,3 @@
-import { z } from "zod"
-
 import { UserTypes } from "@/types/global"
 import UserType from "@/components/common/UserType"
 
@@ -10,7 +8,9 @@ export const hostings = [
   {
     title: "xerocode",
   },
-]
+] as const
+export type IHostings = typeof hostings
+
 export const platforms = [{ title: "AWS cloud" }, { title: "Github" }] as const
 export type IPlatforms = typeof platforms
 
@@ -28,3 +28,4 @@ export const userTypes = [
     component: <UserType userType={UserTypes.Company} />,
   },
 ]
+export type IUserTypes = typeof userTypes

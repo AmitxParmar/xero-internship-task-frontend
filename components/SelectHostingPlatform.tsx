@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { IPlatforms } from "@/helpers/constants"
 import { useAuth } from "@/store/auth.store"
 import axios from "axios"
 
@@ -9,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { Button } from "./ui/button"
 
-const SelectHostingPlatform = ({ platforms }: IPlatforms) => {
+const SelectHostingPlatform = ({ platforms }: { platforms: IPlatforms }) => {
   const { setNextStep, loginSuccess, user } = useAuth((store) => store)
   const [platform, setPlatform] = useState("")
 
@@ -50,16 +51,6 @@ const SelectHostingPlatform = ({ platforms }: IPlatforms) => {
             </TabsTrigger>
           ))}
         </TabsList>
-
-        {platforms.map(({ title, component }, index) => (
-          <TabsContent
-            key={index}
-            value={title}
-            className="mx-auto mt-0 flex items-center p-4 font-semibold"
-          >
-            {component}
-          </TabsContent>
-        ))}
       </Tabs>
       <Button className="font-bold" onClick={() => handleSubmit()}>
         Submit
