@@ -10,6 +10,8 @@ interface IAuth {
   loading: boolean // I'll change that later
   error: string | null | undefined
   step: number
+  token: null | string
+  setToken: (token: string) => void
   setNextStep: () => void
   setError: (error: string) => void
   loginStart: () => void
@@ -27,9 +29,11 @@ export const useAuth = create<IAuth>()(
         step: 0,
         loading: false,
         error: null,
+        token: null,
         setNextStep: () => set((state) => ({ step: state.step + 1 })),
         setError: (error) => set({ error }),
         loginStart: () => set({ loading: true }),
+        setToken: (token: string) => set({ token }),
         loginSuccess: (user) => set({ user, loading: false }),
         loginFailure: (error) => set({ error, loading: false, user: null }),
         logout: () => {

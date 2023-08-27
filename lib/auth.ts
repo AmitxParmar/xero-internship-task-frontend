@@ -1,4 +1,5 @@
 import { env } from "@/env.mjs"
+import { useAuth } from "@/store/auth.store"
 import {
   getServerSession,
   type DefaultSession,
@@ -39,6 +40,7 @@ declare module "next-auth" {
  *
  * @see https://next-auth.js.org/configuration/options
  */
+
 export const authOptions: NextAuthOptions = {
   callbacks: {
     session({ session, user }) {
@@ -46,15 +48,21 @@ export const authOptions: NextAuthOptions = {
         session.user.id = user.id
         // session.user.role = user.role; <-- put other properties on the session here
       }
+
       return session
     },
   },
-  /*  adapter: UpstashRedisAdapter(redis) as Adapter, */
-/*   pages: {
-    signIn: "/api/auth/[...nextauth]",
-    newUser: "/sign-up",
+
+  pages: {
+    /*  signIn: "/api/auth/[...nextauth]", */
+    newUser: "/onboard",
     error: "/",
-  }, */
+  },
+  session: {
+    strategy: "jwt",
+  },
+
+  /* strategy: "jwt", */
   logger: {
     error(code, metadata) {
       console.log("nextauth erro", code, metadata)
@@ -85,7 +93,8 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
- /*  secret: env.NEXTAUTH_SECRET, */
+  secret: env.NEXTAUTH_SECRET,
+  /*  secret: env.NEXTAUTH_SECRET, */
 }
 
 /**
