@@ -11,7 +11,7 @@ import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 
 interface IUserType {
-  userType: "company" | "organization"
+  userType: "company" | "organization" | "developer"
 }
 
 const UserType: FC<IUserType> = ({ userType }) => {
@@ -28,6 +28,7 @@ const UserType: FC<IUserType> = ({ userType }) => {
     Partial<{
       company: string | null
       organization: string | null
+      developer?: string | null
     }>
   >({})
   const isValid = fieldsToUpdate[userType] === ""
@@ -56,23 +57,26 @@ const UserType: FC<IUserType> = ({ userType }) => {
   }
 
   return (
-    <div className="flex w-[550px] flex-row gap-5">
-      <Input
-        placeholder={`${userType} Name`}
-        name={userType.toLowerCase()}
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setFieldsToUpdate((prev) => ({
-            ...prev,
-            [e.target.name]: e.target.value,
-          }))
-        }
-        className="placeholder:capitalize"
-      />
+    <div className="flex w-[550px] flex-row items-center justify-center gap-5">
+      {userType !== "developer" && (
+        <Input
+          placeholder={`${userType} Name`}
+          name={userType.toLowerCase()}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setFieldsToUpdate((prev) => ({
+              ...prev,
+              [e.target.name]: e.target.value,
+            }))
+          }
+          className="placeholder:capitalize"
+        />
+      )}
       <span className="block">
         <Button
           disabled={isValid}
           placeholder="SUBMIT"
           onClick={() => handleSubmit()}
+          className="font-semibold"
         >
           {loading ? (
             <div
@@ -84,7 +88,7 @@ const UserType: FC<IUserType> = ({ userType }) => {
           )}
         </Button>
       </span>
-      {error && <p>{error}</p>}
+      {error && <p className="text-sm text-red-600">{error}</p>}
     </div>
   )
 }

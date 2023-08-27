@@ -10,7 +10,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { Button } from "./ui/button"
 
-const SelectHosting = () => {
+const SelectHosting = ({ hostings }: IHostings) => {
   const { setNextStep, loginSuccess, user } = useAuth((store) => store)
   const [hosting, setHosting] = useState("")
 
@@ -42,14 +42,14 @@ const SelectHosting = () => {
               key={index}
               onClick={() => setHosting(title)}
               value={title}
-              className="h-[59px] w-[266px] border border-borderSubtle capitalize"
+              className="h-[59px] w-[266px] border border-borderSubtle font-semibold capitalize"
             >
               <p>{title + " hosting"}</p>
             </TabsTrigger>
           ))}
         </TabsList>
       </Tabs>
-      <Button className="mx-auto" onClick={() => handleSubmit()}>
+      <Button className="mx-auto font-semibold" onClick={() => handleSubmit()}>
         Submit
       </Button>
     </div>

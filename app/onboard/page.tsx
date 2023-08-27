@@ -1,17 +1,19 @@
 "use client"
 
-import React, { useState } from "react"
+import { hostings, platforms } from "@/helpers/constants"
 import { useAuth } from "@/store/auth.store"
 
 import SelectHosting from "@/components/SelectHosting"
+import SelectHostingPlatform from "@/components/SelectHostingPlatform"
 import SelectUserType from "@/components/SelectUserType"
 
 const Onboarding = () => {
-  const { step, setNextStep } = useAuth((store) => store)
+  const { step } = useAuth((store) => store)
   return (
     <div>
       {step === 0 && <SelectUserType />}
-      {step === 1 && <SelectHosting />}
+      {step === 1 && <SelectHosting hostings={hostings} />}
+      {step === 2 && <SelectHostingPlatform platforms={platforms} />}
     </div>
   )
 }

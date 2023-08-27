@@ -42,6 +42,7 @@ const SignIn = () => {
       credentialsSchema.parse(credentials)
       return true
     } catch (error) {
+      console.log(error)
       if (error instanceof z.ZodError) setError(error.message)
       return false
     }
@@ -52,7 +53,7 @@ const SignIn = () => {
   }
 
   const submitData = async () => {
-    if (!isValid) return
+    if (!isValid()) return
     try {
       loginStart()
       const res = await axios.post<{

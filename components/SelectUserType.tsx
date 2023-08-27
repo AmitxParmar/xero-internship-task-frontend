@@ -22,7 +22,6 @@ const SelectUserType = () => {
       {userTypes.map(({ title, component }, index) => (
         <TabsContent
           key={index}
-          aria-disabled={title === "developer"}
           value={title}
           className="mx-auto mt-0 flex items-center p-4"
         >

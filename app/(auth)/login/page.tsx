@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation"
 import { useAuth } from "@/store/auth.store"
 import axios from "axios"
 
-
 import { SIGN_IN } from "@/config/ApiRoutes"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -43,7 +42,9 @@ const Login = () => {
       if (data.success) {
         console.log(data.userInfo, "userInfo storing in state")
         loginSuccess(data?.userInfo?._doc)
-        router.push("/dashboard")
+        data?.userInfo?._doc.onboarded
+          ? router.replace("/dashboard")
+          : router.replace("/onboard")
       } else {
         loginFailure(data.message)
       }
