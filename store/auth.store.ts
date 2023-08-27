@@ -1,7 +1,7 @@
 "use client"
 
 import { create } from "zustand"
-import { persist } from "zustand/middleware"
+import { devtools, persist } from "zustand/middleware"
 
 import { IUser } from "@/types/global"
 
@@ -20,26 +20,28 @@ interface IAuth {
 }
 
 export const useAuth = create<IAuth>()(
-  persist(
-    (set) => ({
-      user: null,
-      step: 0,
-      loading: false,
-      error: null,
-      setNextStep: () => set((state) => ({ step: state.step + 1 })),
-      setError: (error) => set({ error }),
-      loginStart: () => set({ loading: true }),
-      loginSuccess: (user) => set({ user, loading: false }),
-      loginFailure: (error) => set({ error, loading: false }),
-      logout: () => {
-        localStorage.clear()
-        set({ user: null })
-      },
-      setLoading: (Boolean) => set({ loading: Boolean }),
-    }),
-    {
-      name: "user",
-      partialize: (state) => ({ user: state.user }),
-    }
+  devtools(
+    persist(
+      (set) => ({
+        user: null,
+        step: 0,
+        loading: false,
+        error: null,
+        setNextStep: () => set((state) => ({ step: state.step + 1 })),
+        setError: (error) => set({ error }),
+        loginStart: () => set({ loading: true }),
+        loginSuccess: (user) => set({ user, loading: false }),
+        loginFailure: (error) => set({ error, loading: false }),
+        logout: () => {
+          localStorage.clear()
+          set({ user: null })
+        },
+        setLoading: (Boolean) => set({ loading: Boolean }),
+      }),
+      {
+        name: "user",
+        partialize: (state) => ({ user: state.user, step: state.step }),
+      }
+    )
   )
 )
