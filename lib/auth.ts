@@ -2,7 +2,6 @@ import { type GetServerSidePropsContext } from "next"
 import { env } from "@/env.mjs"
 import { UpstashRedisAdapter } from "@auth/upstash-redis-adapter"
 import {
-  User,
   getServerSession,
   type DefaultSession,
   type NextAuthOptions,
@@ -19,6 +18,14 @@ import { redis } from "@/lib/redis"
  *
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
+console.log(
+  'logging envvvvvvvvvvvvvvvvvvvvvvvvv',
+  
+  process.env.GITHUB_ID,
+  process.env.GITHUB_SECRET,
+
+  
+)
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
@@ -49,15 +56,31 @@ export const authOptions: NextAuthOptions = {
       return session
     },
   },
-  adapter: UpstashRedisAdapter(redis) as Adapter,
+  /*  adapter: UpstashRedisAdapter(redis) as Adapter, */
+  pages: {
+    signIn: "/login",
+    newUser: "/sign-up",
+    error: "/",
+  },
+  logger: {
+    error(code, metadata) {
+      console.log("nextauth erro", code, metadata)
+    },
+    warn(code) {
+      console.log("nextAuth:WARNr", code)
+    },
+    debug(code, metadata) {
+      console.log("nextAuth:DEBUG", code, metadata)
+    },
+  },
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID as string,
       clientSecret: env.GOOGLE_CLIENT_SECRET as string,
     }),
     GithubProvider({
-      clientId: env.GITHUB_CLIENT_ID as string,
-      clientSecret: env.GITHUB_CLIENT_SECRET as string,
+      clientId: env.GITHUB_ID as string,
+      clientSecret: env.GITHUB_SECRET as string,
     }),
     /**
      * ...add more providers here.
@@ -69,7 +92,7 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
-  secret: "IDK",
+  secret: "secret",
 }
 
 /**

@@ -1,6 +1,5 @@
-import { z } from "zod"
-
-import "dotenv/config"
+import { z } from "zod";
+import "dotenv/config";
 
 /**
  * Specify your server-side environment variables schema here. This way you can ensure the app isn't
@@ -24,11 +23,11 @@ const server = z.object({
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
 
-  GITHUB_CLIENT_ID: z.string(),
-  GITHUB_CLIENT_SECRET: z.string(),
+  GITHUB_ID: z.string(),
+  GITHUB_SECRET: z.string(),
 
-  UPSTASH_REDIS_REST_URL: z.string(),
-  UPSTASH_REDIS_REST_TOKEN: z.string(),
+  NEXT_PUBLIC_UPSTASH_REDIS_REST_URL: z.string(),
+  NEXT_PUBLIC_UPSTASH_REDIS_REST_TOKEN: z.string(),
 })
 
 /**
@@ -53,11 +52,13 @@ const processEnv = {
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
 
-  GITHUB_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-  GITHUB_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+  GITHUB_ID: process.env.GITHUB_ID,
+  GITHUB_SECRET: process.env.GITHUB_SECRET,
 
-  UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
-  UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
+  NEXT_PUBLIC_UPSTASH_REDIS_REST_URL:
+    process.env.NEXT_PUBLIC_UPSTASH_REDIS_REST_URL,
+  NEXT_PUBLIC_UPSTASH_REDIS_REST_TOKEN:
+    process.env.NEXT_PUBLIC_UPSTASH_REDIS_REST_TOKEN,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 }
 

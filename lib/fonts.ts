@@ -1,3 +1,4 @@
+'use client'
 import {
   JetBrains_Mono as FontMono,
   Nunito as FontSans,

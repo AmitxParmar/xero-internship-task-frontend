@@ -21,7 +21,9 @@ const PageHero = ({ title, desc }: Props) => {
         />
       </div>
       <div className="relative mb-5 flex flex-col p-1 text-center">
-        <h1 className="mb-3 text-[32px] font-bold capitalize">{title}</h1>
+        <h1 className="mb-3 text-[32px] font-bold capitalize">
+          {title && <span>{title}</span>}
+        </h1>
         <h4 className="justify-baseline flex flex-row items-center whitespace-nowrap text-sm font-bold leading-none text-gray-400">
           <svg
             width="150"
@@ -60,7 +62,7 @@ const PageHero = ({ title, desc }: Props) => {
               strokeOpacity="0.45"
             />
           </svg>
-          {desc}
+          {desc && <span>{desc}</span>}
           <svg
             width="150"
             height="1"

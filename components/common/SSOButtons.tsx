@@ -28,7 +28,7 @@ const SSOButtons = (props: Props) => {
         className="relative px-2 text-subtle/50"
         onClick={() => signIn("github")}
       >
-        Sign in with Google
+        Sign in with Github
         <Image
           src={"/svg/github.svg"}
           alt="google icon"
