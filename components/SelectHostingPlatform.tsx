@@ -1,12 +1,13 @@
 "use client"
 
 import { useState } from "react"
+import { redirect } from "next/navigation"
 import { IPlatforms } from "@/helpers/constants"
 import { useAuth } from "@/store/auth.store"
 import axios from "axios"
 
 import { UPDATE_USER } from "@/config/ApiRoutes"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { Button } from "./ui/button"
 
@@ -23,7 +24,8 @@ const SelectHostingPlatform = ({ platforms }: { platforms: IPlatforms }) => {
           })
           if (data?.success) {
             loginSuccess(data.userInfo)
-            setNextStep()
+            redirect("https://github.com/apps/xerocode-inter-task")
+            /* setNextStep() */
           }
         }
       }

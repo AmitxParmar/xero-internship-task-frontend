@@ -1,16 +1,12 @@
 import { type GetServerSidePropsContext } from "next"
 import { env } from "@/env.mjs"
-import { UpstashRedisAdapter } from "@auth/upstash-redis-adapter"
 import {
   getServerSession,
   type DefaultSession,
   type NextAuthOptions,
 } from "next-auth"
-import { Adapter } from "next-auth/adapters"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
-
-import { redis } from "@/lib/redis"
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -19,12 +15,10 @@ import { redis } from "@/lib/redis"
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
 console.log(
-  'logging envvvvvvvvvvvvvvvvvvvvvvvvv',
-  
-  process.env.GITHUB_ID,
-  process.env.GITHUB_SECRET,
+  "logging envvvvvvvvvvvvvvvvvvvvvvvvv",
 
-  
+  process.env.GITHUB_ID,
+  process.env.GITHUB_SECRET
 )
 declare module "next-auth" {
   interface Session extends DefaultSession {

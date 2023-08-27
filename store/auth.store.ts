@@ -31,7 +31,7 @@ export const useAuth = create<IAuth>()(
         setError: (error) => set({ error }),
         loginStart: () => set({ loading: true }),
         loginSuccess: (user) => set({ user, loading: false }),
-        loginFailure: (error) => set({ error, loading: false }),
+        loginFailure: (error) => set({ error, loading: false, user: null }),
         logout: () => {
           localStorage.clear()
           set({ user: null })
