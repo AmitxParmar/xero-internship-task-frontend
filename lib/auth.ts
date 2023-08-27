@@ -1,4 +1,3 @@
-import { type GetServerSidePropsContext } from "next"
 import { env } from "@/env.mjs"
 import {
   getServerSession,
@@ -51,11 +50,11 @@ export const authOptions: NextAuthOptions = {
     },
   },
   /*  adapter: UpstashRedisAdapter(redis) as Adapter, */
-  pages: {
-    signIn: "/login",
+/*   pages: {
+    signIn: "/api/auth/[...nextauth]",
     newUser: "/sign-up",
     error: "/",
-  },
+  }, */
   logger: {
     error(code, metadata) {
       console.log("nextauth erro", code, metadata)
@@ -86,7 +85,7 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
-  secret: env.NEXTAUTH_SECRET,
+ /*  secret: env.NEXTAUTH_SECRET, */
 }
 
 /**
@@ -94,9 +93,6 @@ export const authOptions: NextAuthOptions = {
  *
  * @see https://next-auth.js.org/configuration/nextjs
  */
-/* export const getServerAuthSession = (ctx: {
-  req: GetServerSidePropsContext["req"]
-  res: GetServerSidePropsContext["res"]
-}) => {
-  return getServerSession(ctx.req, ctx.res, authOptions)
-} */
+export const getServerAuthSession = () => {
+  return getServerSession(authOptions)
+}
