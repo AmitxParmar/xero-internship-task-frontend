@@ -1,38 +1,40 @@
-"use client"
-
-import React, { useEffect, useState } from "react"
-import { IHostings } from "@/helpers/constants"
-import { useAuth } from "@/store/auth.store"
+import { GetResponseDataTypeFromEndpointMethod } from "@octokit/types"
 
 import { getServerAuthSession } from "@/lib/auth"
 import { octokit } from "@/lib/octokit"
+import Repositories from "@/components/common/Repositories"
+import UserProfileCard from "@/components/common/UserProfileCard"
 
-const Dashboard = () => {
-  const [repos, setRepos] = useState<IHostings[]>([])
-  const user = useAuth((store) => store.user)
-  const session = getServerAuthSession()
-  console.log("session:::", session)
+export type IRepositories = GetResponseDataTypeFromEndpointMethod<
+  typeof octokit.rest.repos.listForAuthenticatedUser
+>
 
-  const fetchUserRepo = async () => {
-    const repos = await octokit.rest.repos.listForAuthenticatedUser()
-    setRepos(repos as unknown as IHostings[])
+const Dashboard = async () => {
+  const session = await getServerAuthSession()
+  console.log("session:::+1", session?.user)
+
+  const repos = async () => {
+    try {
+      const repos = await octokit.rest.repos.listForAuthenticatedUser()
+      return repos
+    } catch (error) {
+      return null
+    }
   }
-
-  useEffect(() => {
-    console.log(
-      "sessssssssssion boddyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
-    )
-    
-  }, [])
+  const fetchedRepos = await repos()
 
   return (
     <div className="max-w-5xl">
-      {JSON.stringify(user)}
-      <div>AUTH user REPOS</div>
-      <div className="p-10">
-        <pre>{JSON.stringify(session, null, 2)}</pre>
-        <div>{}</div>
-      </div>
+      {session ? (
+        <div className="p-10">
+          <div>{session.user && <UserProfileCard user={session.user} />}</div>
+          <div>
+            {fetchedRepos?.status === 200 && (
+              <Repositories repositories={fetchedRepos.data} />
+            )}
+          </div>
+        </div>
+      ) : null}
     </div>
   )
 }

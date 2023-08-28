@@ -49,7 +49,6 @@ const SignIn = () => {
   }
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCredentials((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    console.log(credentials)
   }
 
   const submitData = async () => {
@@ -69,9 +68,7 @@ const SignIn = () => {
     } catch (error) {
       console.log(error)
       loginFailure(error)
-    } finally {
-      console.log("finally, singup")
-    }
+    } 
   }
 
   return (

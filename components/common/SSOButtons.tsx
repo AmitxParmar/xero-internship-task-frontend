@@ -26,7 +26,11 @@ const SSOButtons = (props: Props) => {
       <Button
         variant={"outline"}
         className="relative px-2 text-subtle/50"
-        onClick={() => signIn("github")}
+        onClick={() =>
+          signIn("github").then((d) =>
+            console.log("used then in singIN button", d)
+          )
+        }
       >
         Sign in with Github
         <Image

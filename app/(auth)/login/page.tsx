@@ -2,9 +2,10 @@
 
 import React, { ChangeEvent, useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import { useAuth } from "@/store/auth.store"
 import axios from "axios"
+import { z } from "zod"
 
 import { SIGN_IN } from "@/config/ApiRoutes"
 import { cn } from "@/lib/utils"
@@ -15,8 +16,15 @@ import SSOButtons from "@/components/common/SSOButtons"
 
 const Login = () => {
   const router = useRouter()
-  const { loginFailure, loginStart, loginSuccess, loading, setLoading, error } =
-    useAuth((store) => store)
+  const {
+    loginFailure,
+    loginStart,
+    loginSuccess,
+    setError,
+    loading,
+    setLoading,
+    error,
+  } = useAuth((store) => store)
   const [credentials, setCredentials] = useState<{
     email: string
     password: string
@@ -28,11 +36,27 @@ const Login = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCredentials((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
-  const { email, password } = credentials
-  const isValid = email === "" || password === ""
+
+  const credentialsSchema = z
+    .object({
+      email: z.string().email().min(5).max(15),
+      password: z.string().min(8).max(25),
+    })
+    .required()
+
+  const isValid = () => {
+    try {
+      credentialsSchema.parse(credentials)
+      return true
+    } catch (error) {
+      console.log(error)
+      if (error instanceof z.ZodError) setError(error.message)
+      return false
+    }
+  }
 
   const submitData = async () => {
-    if (isValid) return
+    if (!isValid()) return
     try {
       loginStart()
       const { data } = await axios.post(SIGN_IN, {
@@ -40,7 +64,6 @@ const Login = () => {
       })
       console.log(data)
       if (data.success) {
-        console.log(data.userInfo, "userInfo storing in state")
         loginSuccess(data?.userInfo?._doc)
         data?.userInfo?._doc.onboarded
           ? router.replace("/dashboard")
@@ -50,7 +73,7 @@ const Login = () => {
       }
     } catch (error) {
       loginFailure(error)
-      console.log(error)
+      redirect("/login")
     } finally {
       setLoading(false)
     }

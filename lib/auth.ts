@@ -1,10 +1,12 @@
 import { env } from "@/env.mjs"
-import { useAuth } from "@/store/auth.store"
+import { UpstashRedisAdapter } from "@auth/upstash-redis-adapter"
+import { Redis } from "@upstash/redis/nodejs"
 import {
   getServerSession,
   type DefaultSession,
   type NextAuthOptions,
 } from "next-auth"
+import { Adapter } from "next-auth/adapters"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 
@@ -14,12 +16,14 @@ import GoogleProvider from "next-auth/providers/google"
  *
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
-console.log(
+/* console.log(
   "logging envvvvvvvvvvvvvvvvvvvvvvvvv",
-
+  process.env.GOOGLE_CLIENT_ID,
   process.env.GITHUB_ID,
   process.env.GITHUB_SECRET
-)
+) */
+console.log("REDIS:::+++", env.REDIS_TOKEN, env.REDIS_URL)
+
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
@@ -42,28 +46,34 @@ declare module "next-auth" {
  */
 
 export const authOptions: NextAuthOptions = {
+  adapter: UpstashRedisAdapter(
+    new Redis({
+      url: env.REDIS_URL,
+      token: env.REDIS_TOKEN,
+    })
+  ) as Adapter,
   callbacks: {
     session({ session, user }) {
       if (session.user) {
         session.user.id = user.id
         // session.user.role = user.role; <-- put other properties on the session here
       }
-
       return session
     },
   },
 
   pages: {
     /*  signIn: "/api/auth/[...nextauth]", */
-    newUser: "/onboard",
+    newUser: "/dashboard",
     error: "/",
   },
+
   session: {
-    strategy: "jwt",
+    strategy: "database",
   },
 
   /* strategy: "jwt", */
-  logger: {
+  /*   logger: {
     error(code, metadata) {
       console.log("nextauth erro", code, metadata)
     },
@@ -73,15 +83,15 @@ export const authOptions: NextAuthOptions = {
     debug(code, metadata) {
       console.log("nextAuth:DEBUG", code, metadata)
     },
-  },
+  }, */
   providers: [
     GoogleProvider({
-      clientId: env.GOOGLE_CLIENT_ID as string,
-      clientSecret: env.GOOGLE_CLIENT_SECRET as string,
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
     GithubProvider({
-      clientId: env.GITHUB_ID as string,
-      clientSecret: env.GITHUB_SECRET as string,
+      clientId: process.env.GITHUB_ID as string,
+      clientSecret: process.env.GITHUB_SECRET as string,
     }),
     /**
      * ...add more providers here.
@@ -93,7 +103,7 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
-  secret: env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   /*  secret: env.NEXTAUTH_SECRET, */
 }
 

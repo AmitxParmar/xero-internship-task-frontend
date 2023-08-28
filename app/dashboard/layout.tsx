@@ -1,17 +1,17 @@
 "use client"
 
 import { ReactNode } from "react"
-import { useAuth } from "@/store/auth.store"
 
+import { getServerAuthSession } from "@/lib/auth"
 import PageHero from "@/components/common/PageHero"
 
 const RootLayout = ({ children }: { children: ReactNode }) => {
-  const { user } = useAuth((store) => store)
+  const session = getServerAuthSession()
   return (
-    <div className="flex min-h-screen w-screen flex-col  items-center bg-[#ccc]">
-      {user ? (
+    <div className="flex min-h-screen w-screen flex-col  items-center bg-primary/40">
+      {!!session ? (
         <PageHero
-          title={`Welcome ${user.firstname} ${user.lastname}!`}
+          title={`Welcome ${session}`}
           desc="Choose From The Following"
         />
       ) : (

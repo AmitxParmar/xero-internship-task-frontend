@@ -2,7 +2,7 @@ import { env } from "@/env.mjs"
 import { Octokit } from "@octokit/rest"
 
 export const octokit = new Octokit({
-  auth: env.GITHUB_SECRET,
+  auth: env.NEXTAUTH_SECRET,
 
   baseUrl: "https://api.github.com",
   log: {
