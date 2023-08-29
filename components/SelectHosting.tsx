@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { IHostings, hostings } from "@/helpers/constants"
+import { IHostings } from "@/helpers/constants"
 import { useAuth } from "@/store/auth.store"
 import axios from "axios"
 
@@ -12,17 +12,24 @@ import { Button } from "./ui/button"
 
 const SelectHosting = ({ hostings }: { hostings: IHostings }) => {
   const { setNextStep, loginSuccess, user } = useAuth((store) => store)
-  const [hosting, setHosting] = useState("")
+  const [hosting, setHosting] = useState("self")
 
   const handleSubmit = async () => {
+    console.log("into hosting type selection, return if empty string")
+    console.log("hosting type", hosting)
+    console.log("id thereis any user Id", user?._id)
     try {
       if (user?._id) {
+        console.log("userid inhostingtype", user._id)
         const { data } = await axios.put(`${UPDATE_USER}/${user._id}`, {
           hostingType: hosting,
         })
         if (data?.success) {
+          console.log("SelectedHostingType:", hosting, data.success)
           loginSuccess(data.userInfo)
+          console.log("userInfo", data.userInfo)
           setNextStep()
+          console.log("go next step")
         }
       }
     } catch (error) {
@@ -30,9 +37,11 @@ const SelectHosting = ({ hostings }: { hostings: IHostings }) => {
     }
   }
 
+  const handleValueChange = (p: string) => setHosting(p)
   return (
     <div className="flex flex-col items-center justify-center gap-16">
       <Tabs
+        onValueChange={handleValueChange}
         defaultValue="self"
         className="mx-auto flex flex-col items-center justify-center"
       >

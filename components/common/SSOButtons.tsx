@@ -12,7 +12,11 @@ const SSOButtons = (props: Props) => {
       <Button
         variant={"outline"}
         className="relative px-2 text-subtle/50"
-        onClick={() => void signIn("google")}
+        onClick={() =>
+          void signIn("google", {
+            callbackUrl: `${window.location.origin}/dashboard`,
+          })
+        }
       >
         Sign in with Google
         <Image
@@ -27,9 +31,9 @@ const SSOButtons = (props: Props) => {
         variant={"outline"}
         className="relative px-2 text-subtle/50"
         onClick={() =>
-          signIn("github").then((d) =>
-            console.log("used then in singIN button", d)
-          )
+          signIn("github", {
+            callbackUrl: `${window.location.origin}/dashboard`,
+          }).then((d) => console.log("used then in sign in button", d))
         }
       >
         Sign in with Github

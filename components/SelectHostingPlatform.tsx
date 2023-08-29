@@ -12,7 +12,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "./ui/button"
 
 const SelectHostingPlatform = ({ platforms }: { platforms: IPlatforms }) => {
-  const { setNextStep, loginSuccess, user } = useAuth((store) => store)
+  const { loginSuccess, user } = useAuth((store) => store)
   const [platform, setPlatform] = useState("")
 
   const handleSubmit = async () => {
@@ -25,7 +25,6 @@ const SelectHostingPlatform = ({ platforms }: { platforms: IPlatforms }) => {
           if (data?.success) {
             loginSuccess(data.userInfo)
             redirect("https://github.com/apps/xerocode-inter-task")
-            /* setNextStep() */
           }
         }
       }

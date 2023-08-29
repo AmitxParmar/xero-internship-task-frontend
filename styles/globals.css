@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-*,
+/* *,
 ::before,
 ::after {
   font-family: var(--font-sans);
-}
+} */
 
 @layer base {
   :root {

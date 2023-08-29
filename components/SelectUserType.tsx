@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const SelectUserType = ({ userTypes }: { userTypes: IUserTypes }) => {
   return (
-    <Tabs defaultValue="developer" className="flex flex-col">
+    <div defaultValue="developer" className="flex flex-col">
       <TabsList className="mx-auto grid h-full grid-cols-3 grid-rows-none justify-between gap-12 bg-transparent">
         {userTypes.map(({ title }, index) => (
           <TabsTrigger
@@ -28,7 +28,7 @@ const SelectUserType = ({ userTypes }: { userTypes: IUserTypes }) => {
           {component}
         </TabsContent>
       ))}
-    </Tabs>
+    </div>
   )
 }
 

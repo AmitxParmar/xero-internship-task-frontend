@@ -1,4 +1,3 @@
-'use client'
 import {
   JetBrains_Mono as FontMono,
   Nunito as FontSans,
@@ -7,6 +6,7 @@ import {
 export const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
+  preload: true,
 })
 
 export const fontMono = FontMono({

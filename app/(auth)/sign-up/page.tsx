@@ -3,7 +3,6 @@
 import React, { ChangeEvent, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { validateUserCredentials } from "@/helpers"
 import { useAuth } from "@/store/auth.store"
 import axios from "axios"
 import { z } from "zod"
@@ -88,7 +87,6 @@ const SignIn = () => {
                 value={credentials.firstname}
                 placeholder="First Name"
                 type="text"
-                {...{ minLength: 5, maxLength: 40 }}
               />
             </div>
             <div className="relative flex flex-col">
